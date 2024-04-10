@@ -30,7 +30,7 @@ int adjust_scale(int adc_value) {
     int adjusted_value = ((adc_value - 2048) * 255) / 2048;
 
     // Aplicar a zona morta
-    if (adjusted_value > -30 && adjusted_value < 30) {
+    if (adjusted_value > -150 && adjusted_value < 150) {
         return 0;
     } else {
         return adjusted_value;
@@ -70,7 +70,7 @@ void x_task(void *p) {
 
         xQueueSend(xQueueAdc, &data, portMAX_DELAY);
 
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
 
@@ -93,10 +93,10 @@ void y_task(void *p) {
 
         data.axis = 1;
         data.val = adjust_scale(mediaY);
-
+        
         xQueueSend(xQueueAdc, &data, portMAX_DELAY);
 
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
 
@@ -106,7 +106,7 @@ void uart_task(void *p) {
     while (1) {
         xQueueReceive(xQueueAdc, &data, portMAX_DELAY);
         // printf("%d\n", data);
-        write_package(data);
+        if (data.val != 0) write_package(data);
     }
 }
 
