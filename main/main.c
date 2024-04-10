@@ -54,7 +54,7 @@ void x_task(void *p) {
     adc_gpio_init(ADC0_X);
 
     int v[5];
-    int media=0;
+    int media;
 
     while (1) {
         adc_select_input(ADC0_CHANNEL);
@@ -80,7 +80,7 @@ void y_task(void *p) {
     adc_gpio_init(ADC1_Y);
 
     int v[5];
-    int media=0;
+    int media;
 
     while (1) {
         adc_select_input(ADC1_CHANNEL);
