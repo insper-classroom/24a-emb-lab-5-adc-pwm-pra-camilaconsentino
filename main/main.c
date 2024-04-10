@@ -54,7 +54,7 @@ void x_task(void *p) {
     adc_gpio_init(ADC0_X);
 
     int v[5];
-    int media;
+    //int mediaX;
 
     while (1) {
         adc_select_input(ADC0_CHANNEL);
@@ -63,10 +63,10 @@ void x_task(void *p) {
         v[2]=v[3];
         v[3]=v[4];
         v[4]=adc_read();
-        media = ((v[4]+v[3]+v[2]+v[1]+v[0])/5);
+        int mediaX = ((v[4]+v[3]+v[2]+v[1]+v[0])/5);
 
         data.axis = 0;
-        data.val = adjust_scale(media);
+        data.val = adjust_scale(mediaX);
 
         xQueueSend(xQueueAdc, &data, portMAX_DELAY);
 
@@ -80,7 +80,7 @@ void y_task(void *p) {
     adc_gpio_init(ADC1_Y);
 
     int v[5];
-    int media;
+    //int mediaY;
 
     while (1) {
         adc_select_input(ADC1_CHANNEL);
@@ -89,10 +89,10 @@ void y_task(void *p) {
         v[2]=v[3];
         v[3]=v[4];
         v[4]=adc_read();
-        media = ((v[4]+v[3]+v[2]+v[1]+v[0])/5);
+        int mediaY = ((v[4]+v[3]+v[2]+v[1]+v[0])/5);
 
         data.axis = 1;
-        data.val = adjust_scale(media);
+        data.val = adjust_scale(mediaY);
 
         xQueueSend(xQueueAdc, &data, portMAX_DELAY);
 
